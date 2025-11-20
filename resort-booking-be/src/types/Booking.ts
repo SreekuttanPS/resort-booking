@@ -4,16 +4,16 @@ export const createBookingSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
   phone: z.string().min(1, 'Phone number is required'),
-  checkInDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+  checkInDate: z.string().refine((date: string) => !isNaN(Date.parse(date)), {
     message: 'Invalid check-in date',
   }),
-  checkOutDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+  checkOutDate: z.string().refine((date: string) => !isNaN(Date.parse(date)), {
     message: 'Invalid check-out date',
   }),
   guests: z.number().int().positive('Number of guests must be a positive integer'),
   message: z.string().optional(),
 }).refine(
-  (data) => {
+  (data: { checkInDate: string; checkOutDate: string }) => {
     const checkIn = new Date(data.checkInDate);
     const checkOut = new Date(data.checkOutDate);
     return checkOut > checkIn;

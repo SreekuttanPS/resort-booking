@@ -9,12 +9,14 @@ export class ApiError extends Error {
     super(message);
     this.statusCode = statusCode;
     this.isOperational = isOperational;
-    Error.captureStackTrace(this, this.constructor);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
   }
 }
 
 const formatZodError = (error: ZodError) => {
-  const errors = error.errors.map((err) => ({
+  const errors = error.errors.map((err: { path: (string | number)[]; message: string }) => ({
     field: err.path.join('.'),
     message: err.message,
   }));

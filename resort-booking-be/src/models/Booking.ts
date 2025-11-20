@@ -47,7 +47,7 @@ const bookingSchema = new Schema<IBookingDocument>(
   }
 );
 
-bookingSchema.pre('save', function (next) {
+bookingSchema.pre('save', function (this: IBookingDocument, next) {
   if (this.checkOutDate <= this.checkInDate) {
     next(new Error('Check-out date must be after check-in date'));
   } else {
