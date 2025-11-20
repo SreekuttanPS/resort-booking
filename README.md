@@ -20,6 +20,7 @@ Create .env file in the backend folder with these fields:
 MONGO_URI=your_mongo_db_uri
 PORT=5000
 NODE_ENV=development
+FRONTEND_URL=your_frontend_url
 
 ```bash
 cd resort-booking-be
